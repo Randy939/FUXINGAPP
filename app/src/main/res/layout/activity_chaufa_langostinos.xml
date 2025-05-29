@@ -160,10 +160,29 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonOrderNow"
-        android:layout_width="235dp"
+        android:id="@+id/buttonAddToCart"
+        android:layout_width="0dp"
         android:layout_height="67dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/red_primary_placeholder"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:text="COLOCAR EN EL CARRITO"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:cornerRadius="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonOrderNow"
+        />
+
+    <Button
+        android:id="@+id/buttonOrderNow"
+        android:layout_width="0dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/red_primary_placeholder"
@@ -175,22 +194,23 @@
         app:cornerRadius="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/buttonAddToCart"
+        />
 
     <TextView
         android:id="@+id/textViewPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
         android:text="S/. 17.00"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonOrderNow"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddToCart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonOrderNow"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutQuantitySelector"
+        />
 
     <ImageButton
         android:id="@+id/imageButtonFavorite"

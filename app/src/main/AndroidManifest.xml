@@ -77,6 +77,10 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
 
+        <activity android:name=".FavoritesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+
     </application>
 
 </manifest>

@@ -11,8 +11,9 @@
         android:title="Perfil" />
 
     <item
-        android:id="@+id/navigation_placeholder"
-        android:title="" /> <!-- Placeholder item for the FAB space -->
+        android:id="@+id/navigation_cart"
+        android:icon="@drawable/ic_cart_placeholder"
+        android:title="" />
 
     <item
         android:id="@+id/navigation_mood"

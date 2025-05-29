@@ -35,6 +35,7 @@ class MetodoPagoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_metodo_pago)
 
+        // Inicializar vistas
         textViewOrderPrice = findViewById(R.id.textViewOrderPrice)
         textViewTotalPrice = findViewById(R.id.textViewTotalPrice)
         textViewFinalPriceValue = findViewById(R.id.textViewFinalPriceValue)
@@ -56,11 +57,11 @@ class MetodoPagoActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        // Obtener el precio del producto de la actividad anterior
-        val productPrice = intent.getDoubleExtra("product_price", 0.0)
+        // Obtener el total del carrito de la actividad anterior
+        val cartTotal = intent.getDoubleExtra("cart_total", 0.0)
 
-        // Actualizar el precio de la orden y calcular el total
-        updatePrices(productPrice)
+        // Actualizar el precio de la orden y calcular el total final
+        updatePrices(cartTotal)
 
         // Configurar listeners para la selección de tarjetas
         constraintLayoutCreditCard.setOnClickListener {
@@ -99,18 +100,18 @@ class MetodoPagoActivity : AppCompatActivity() {
         // Aquí se añadiría la lógica para guardar datos de tarjeta
     }
 
-    private fun updatePrices(productPrice: Double) {
-        textViewOrderPrice.text = String.format("S/.%.2f", productPrice)
-        val total = productPrice + TAXES + DELIVERY_FEE
-        textViewTotalPrice.text = String.format("S/.%.2f", total)
-        textViewFinalPriceValue.text = String.format("S/.%.2f", total)
+    private fun updatePrices(orderPrice: Double) {
+        textViewOrderPrice.text = String.format("S/.%.2f", orderPrice)
+        val total = orderPrice + TAXES + DELIVERY_FEE
+        textViewTotalPrice.text = String.format("S/.%.2f", total) // Assuming textViewTotalPrice is for the breakdown
+        textViewFinalPriceValue.text = String.format("S/.%.2f", total) // Assuming textViewFinalPriceValue is for the final total
     }
 
     private fun selectPaymentMethod(method: PaymentMethod) {
         when (method) {
             PaymentMethod.CREDIT_CARD -> {
-                constraintLayoutCreditCard.setBackgroundColor(Color.parseColor("#424242"))
-                constraintLayoutDebitCard.setBackgroundColor(Color.parseColor("#F5F5F5"))
+                constraintLayoutCreditCard.setBackgroundColor(Color.parseColor("#424242")) // Color oscuro para seleccionado
+                constraintLayoutDebitCard.setBackgroundColor(Color.parseColor("#F5F5F5")) // Color claro para no seleccionado
                 radioButtonCreditCard.isChecked = true
                 radioButtonDebitCard.isChecked = false
                 textViewCreditCardLabel.setTextColor(Color.WHITE)
@@ -119,8 +120,8 @@ class MetodoPagoActivity : AppCompatActivity() {
                 textViewDebitCardNumber.setTextColor(Color.BLACK)
             }
             PaymentMethod.DEBIT_CARD -> {
-                constraintLayoutCreditCard.setBackgroundColor(Color.parseColor("#F5F5F5"))
-                constraintLayoutDebitCard.setBackgroundColor(Color.parseColor("#424242"))
+                constraintLayoutCreditCard.setBackgroundColor(Color.parseColor("#F5F5F5")) // Color claro para no seleccionado
+                constraintLayoutDebitCard.setBackgroundColor(Color.parseColor("#424242")) // Color oscuro para seleccionado
                 radioButtonCreditCard.isChecked = false
                 radioButtonDebitCard.isChecked = true
                 textViewCreditCardLabel.setTextColor(Color.BLACK)

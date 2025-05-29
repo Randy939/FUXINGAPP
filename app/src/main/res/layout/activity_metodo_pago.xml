@@ -1,17 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="#FDFDFD"
     tools:context=".MetodoPagoActivity">
 
     <ImageButton
         android:id="@+id/imageButtonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"
         android:src="@drawable/ic_arrow_back_placeholder"
@@ -26,22 +27,10 @@
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageButtonBack"
         app:layout_constraintTop_toTopOf="@id/imageButtonBack"
-        app:layout_constraintBottom_toBottomOf="@id/imageButtonBack"/>
-
-    <ImageButton
-        android:id="@+id/imageButtonSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="20dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"
-        android:src="@drawable/ic_search_placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/imageButtonBack"
+        android:layout_marginStart="16dp"/>
 
     <TextView
         android:id="@+id/textViewOrderLabel"
@@ -266,7 +255,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewCreditCard">
+        app:layout_constraintTop_toBottomOf="@id/cardViewCreditCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutDebitCard"
@@ -429,7 +418,7 @@
             android:id="@+id/buttonPayNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#424242"
+            android:backgroundTint="@color/red_primary_placeholder"
             android:text="Pagar Ahora"
             android:textColor="@android:color/white"
             app:cornerRadius="16dp" />

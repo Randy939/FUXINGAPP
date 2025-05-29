@@ -267,7 +267,8 @@
                             android:layout_marginEnd="12dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="@id/textViewRating1"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar1"/>
+                            app:layout_constraintTop_toTopOf="@id/imageViewStar1"
+                            android:tag="chaufa_langostinos"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -342,7 +343,8 @@
                             app:tint="@color/red_primary_placeholder" android:layout_marginEnd="12dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="@id/textViewRating2"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar2"/>
+                            app:layout_constraintTop_toTopOf="@id/imageViewStar2"
+                            android:tag="chaufa_carne"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -418,7 +420,8 @@
                             android:layout_marginEnd="12dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="@id/textViewRating3"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar3"/>
+                            app:layout_constraintTop_toTopOf="@id/imageViewStar3"
+                            android:tag="tallarines_pollo"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -494,7 +497,8 @@
                             android:layout_marginEnd="12dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="@id/textViewRating4"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar4"/>
+                            app:layout_constraintTop_toTopOf="@id/imageViewStar4"
+                            android:tag="tallarines_carne"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
