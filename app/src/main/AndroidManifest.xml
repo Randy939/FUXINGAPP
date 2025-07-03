@@ -30,11 +30,15 @@
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        </activity>
 
         <activity android:name=".LoadingActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        </activity>
 
         <activity android:name=".DetallePlatoActivity"
             android:exported="false"
@@ -42,11 +46,15 @@
 
         <activity android:name=".RegisterActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        </activity>
 
         <activity android:name=".MetodoPagoActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        </activity>
 
         <activity android:name=".PaymentNotificationActivity"
             android:exported="false"
@@ -58,22 +66,23 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
         </activity>
 
-        <activity android:name=".AgregarTarjetaActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
-
         <activity android:name=".ProfileActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        </activity>
 
         <activity android:name=".CustomerServiceActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        </activity>
 
         <activity android:name=".FavoritesActivity"
             android:exported="false"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+
+        </activity>
 
     </application>
 

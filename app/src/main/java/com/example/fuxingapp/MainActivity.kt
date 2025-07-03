@@ -198,7 +198,10 @@ class MainActivity : AppCompatActivity() {
         btnCerrar.setOnClickListener { dialog.dismiss() }
 
         btnPagar.setOnClickListener {
-            Toast.makeText(this, "Función de pago aún no implementada", Toast.LENGTH_SHORT).show()
+            val subtotal = CartManager.calcularTotal()
+            val intent = Intent(this, MetodoPagoActivity::class.java)
+            intent.putExtra("subtotal", subtotal)
+            startActivity(intent)
             dialog.dismiss()
         }
 

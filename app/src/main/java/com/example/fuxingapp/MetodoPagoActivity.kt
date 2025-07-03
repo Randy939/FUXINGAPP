@@ -1,139 +1,84 @@
 package com.example.fuxingapp
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.TextView
-import android.widget.Button
-import android.widget.ImageButton
-import androidx.cardview.widget.CardView
-import android.widget.RadioButton
-import androidx.core.content.ContextCompat
-import android.graphics.Color
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class MetodoPagoActivity : AppCompatActivity() {
-
-    private lateinit var textViewOrderPrice: TextView
-    private lateinit var textViewTotalPrice: TextView
-    private lateinit var textViewFinalPriceValue: TextView
-    private lateinit var constraintLayoutCreditCard: ConstraintLayout
-    private lateinit var constraintLayoutDebitCard: ConstraintLayout
-    private lateinit var radioButtonCreditCard: RadioButton
-    private lateinit var radioButtonDebitCard: RadioButton
-    private lateinit var textViewCreditCardLabel: TextView
-    private lateinit var textViewCreditCardNumber: TextView
-    private lateinit var textViewDebitCardLabel: TextView
-    private lateinit var textViewDebitCardNumber: TextView
-    private lateinit var buttonPayNow: Button
-    private lateinit var cardViewAddCard: CardView
-
-    private val TAXES = 0.50 // Impuesto fijo
-    private val DELIVERY_FEE = 1.50 // Costo de delivery fijo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_metodo_pago)
 
-        // Inicializar vistas
-        textViewOrderPrice = findViewById(R.id.textViewOrderPrice)
-        textViewTotalPrice = findViewById(R.id.textViewTotalPrice)
-        textViewFinalPriceValue = findViewById(R.id.textViewFinalPriceValue)
-        constraintLayoutCreditCard = findViewById(R.id.constraintLayoutCreditCard)
-        constraintLayoutDebitCard = findViewById(R.id.constraintLayoutDebitCard)
-        radioButtonCreditCard = findViewById(R.id.radioButtonCreditCard)
-        radioButtonDebitCard = findViewById(R.id.radioButtonDebitCard)
-        textViewCreditCardLabel = findViewById(R.id.textViewCreditCardLabel)
-        textViewCreditCardNumber = findViewById(R.id.textViewCreditCardNumber)
-        textViewDebitCardLabel = findViewById(R.id.textViewDebitCardLabel)
-        textViewDebitCardNumber = findViewById(R.id.textViewDebitCardNumber)
-        buttonPayNow = findViewById(R.id.buttonPayNow)
-        cardViewAddCard = findViewById(R.id.cardViewAddCard)
+        val subtotal = intent.getDoubleExtra("subtotal", 0.0)
 
-        val imageButtonBack: ImageButton = findViewById(R.id.imageButtonBack)
+        // Impuestos y delivery fijos
+        val impuesto = 0.50
+        val delivery = 1.50
+        val total = subtotal + impuesto + delivery
 
-        // Configurar botón de retroceso
-        imageButtonBack.setOnClickListener {
-            onBackPressed()
+        // Referencias a los TextView
+        val textOrder = findViewById<TextView>(R.id.textViewOrderPrice)
+        val textTaxes = findViewById<TextView>(R.id.textViewTaxesPrice)
+        val textDelivery = findViewById<TextView>(R.id.textViewDeliveryPrice)
+        val textTotal = findViewById<TextView>(R.id.textViewTotalPrice)
+        val textFinal = findViewById<TextView>(R.id.textViewFinalPriceValue)
+        val layoutCredit = findViewById<ConstraintLayout>(R.id.constraintLayoutCreditCard)
+        val layoutDebit = findViewById<ConstraintLayout>(R.id.constraintLayoutDebitCard)
+        val radioCredit = findViewById<RadioButton>(R.id.radioButtonCreditCard)
+        val radioDebit = findViewById<RadioButton>(R.id.radioButtonDebitCard)
+
+        fun actualizarColoresSeleccion(tipo: String) {
+            if (tipo == "credito") {
+                layoutCredit.setBackgroundColor(Color.parseColor("#424242"))
+                layoutDebit.setBackgroundColor(Color.parseColor("#F5F5F5"))
+                radioCredit.isChecked = true
+                radioDebit.isChecked = false
+            } else {
+                layoutDebit.setBackgroundColor(Color.parseColor("#F5F5F5"))
+                layoutCredit.setBackgroundColor(Color.parseColor("#424242"))
+                radioCredit.isChecked = false
+                radioDebit.isChecked = true
+            }
         }
 
-        // Obtener el total del carrito de la actividad anterior
-        val cartTotal = intent.getDoubleExtra("cart_total", 0.0)
-
-        // Actualizar el precio de la orden y calcular el total final
-        updatePrices(cartTotal)
-
-        // Configurar listeners para la selección de tarjetas
-        constraintLayoutCreditCard.setOnClickListener {
-            selectPaymentMethod(PaymentMethod.CREDIT_CARD)
+        // Listeners para selección por radio
+        radioCredit.setOnClickListener {
+            actualizarColoresSeleccion("credito")
+        }
+        radioDebit.setOnClickListener {
+            actualizarColoresSeleccion("debito")
         }
 
-        constraintLayoutDebitCard.setOnClickListener {
-            selectPaymentMethod(PaymentMethod.DEBIT_CARD)
+// Listeners para selección por tocar el layout
+        layoutCredit.setOnClickListener {
+            actualizarColoresSeleccion("credito")
+        }
+        layoutDebit.setOnClickListener {
+            actualizarColoresSeleccion("debito")
         }
 
-        // Configurar listeners para los RadioButtons para que también seleccionen el método de pago
-        radioButtonCreditCard.setOnClickListener {
-            selectPaymentMethod(PaymentMethod.CREDIT_CARD)
+        // Mostrar valores
+        textOrder.text = "S/. %.2f".format(subtotal)
+        textTaxes.text = "S/. %.2f".format(impuesto)
+        textDelivery.text = "S/. %.2f".format(delivery)
+        textTotal.text = "S/. %.2f".format(total)
+        textFinal.text = "S/. %.2f".format(total)
+
+        // Botón para volver atrás
+        val btnBack = findViewById<ImageButton>(R.id.imageButtonBack)
+        btnBack.setOnClickListener {
+            finish()
         }
 
-        radioButtonDebitCard.setOnClickListener {
-            selectPaymentMethod(PaymentMethod.DEBIT_CARD)
-        }
-
-        // Configurar listener para el botón pagar ahora
-        buttonPayNow.setOnClickListener {
+        // Botón de pagar (acción temporal)
+        val btnPayNow = findViewById<Button>(R.id.buttonPayNow)
+        btnPayNow.setOnClickListener {
             val intent = Intent(this, PaymentNotificationActivity::class.java)
             startActivity(intent)
-            finish() // Opcional: cierra MetodoPagoActivity
-        }
-
-        // Configurar listener para la vista de agregar tarjeta
-        cardViewAddCard.setOnClickListener {
-            val intent = Intent(this, AgregarTarjetaActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Seleccionar la tarjeta de crédito por defecto al iniciar
-        selectPaymentMethod(PaymentMethod.CREDIT_CARD)
-
-        // Aquí se añadiría la lógica para guardar datos de tarjeta
-    }
-
-    private fun updatePrices(orderPrice: Double) {
-        textViewOrderPrice.text = String.format("S/.%.2f", orderPrice)
-        val total = orderPrice + TAXES + DELIVERY_FEE
-        textViewTotalPrice.text = String.format("S/.%.2f", total) // Assuming textViewTotalPrice is for the breakdown
-        textViewFinalPriceValue.text = String.format("S/.%.2f", total) // Assuming textViewFinalPriceValue is for the final total
-    }
-
-    private fun selectPaymentMethod(method: PaymentMethod) {
-        when (method) {
-            PaymentMethod.CREDIT_CARD -> {
-                constraintLayoutCreditCard.setBackgroundColor(Color.parseColor("#424242")) // Color oscuro para seleccionado
-                constraintLayoutDebitCard.setBackgroundColor(Color.parseColor("#F5F5F5")) // Color claro para no seleccionado
-                radioButtonCreditCard.isChecked = true
-                radioButtonDebitCard.isChecked = false
-                textViewCreditCardLabel.setTextColor(Color.WHITE)
-                textViewCreditCardNumber.setTextColor(Color.WHITE)
-                textViewDebitCardLabel.setTextColor(Color.BLACK)
-                textViewDebitCardNumber.setTextColor(Color.BLACK)
-            }
-            PaymentMethod.DEBIT_CARD -> {
-                constraintLayoutCreditCard.setBackgroundColor(Color.parseColor("#F5F5F5")) // Color claro para no seleccionado
-                constraintLayoutDebitCard.setBackgroundColor(Color.parseColor("#424242")) // Color oscuro para seleccionado
-                radioButtonCreditCard.isChecked = false
-                radioButtonDebitCard.isChecked = true
-                textViewCreditCardLabel.setTextColor(Color.BLACK)
-                textViewCreditCardNumber.setTextColor(Color.BLACK)
-                textViewDebitCardLabel.setTextColor(Color.WHITE)
-                textViewDebitCardNumber.setTextColor(Color.WHITE)
-            }
         }
     }
-
-    enum class PaymentMethod {
-        CREDIT_CARD,
-        DEBIT_CARD
-    }
-} 
+}

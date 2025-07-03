@@ -112,5 +112,22 @@ class DetallePlatoActivity : AppCompatActivity() {
             CartManager.agregarAlCarrito(item)
             Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
         }
+
+        val buttonOrdenarAhora = findViewById<Button>(R.id.buttonOrderNow)
+        buttonOrdenarAhora.setOnClickListener {
+            val item = CartItem(
+                id = plato.id,
+                nombre = plato.nombre,
+                precioUnitario = plato.precio,
+                cantidad = cantidad,
+                imagenUrl = plato.imagenUrl
+            )
+            CartManager.vaciarCarrito() // Opcional: vacía primero si no quieres duplicar
+            CartManager.agregarAlCarrito(item)
+
+            val intent = Intent(this, MetodoPagoActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }
