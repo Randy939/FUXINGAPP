@@ -148,36 +148,20 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/facebookButton"
-        android:layout_width="363dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#1877F2"
-        android:text="Entrar con Facebook"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        app:cornerRadius="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phoneInputLayout" />
-
-    <Button
         android:id="@+id/googleButton"
         android:layout_width="359dp"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#EEEEEE"
-        android:text="Entrar con Google"
+        android:text="Registrar con Google"
         android:textColor="#000000"
         android:textStyle="bold"
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/facebookButton" />
+        app:layout_constraintTop_toBottomOf="@id/phoneInputLayout" />
 
     <Button
         android:id="@+id/registerButton"
@@ -196,4 +180,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/googleButton" />
 
-</androidx.constraintlayout.widget.ConstraintLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>

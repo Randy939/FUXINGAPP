@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "751147794995",
+    "project_id": "fuxingapp",
+    "storage_bucket": "fuxingapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751147794995:android:36bd52ed1f3e5546621946",
+        "android_client_info": {
+          "package_name": "com.example.fuxingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751147794995-7etl6oorr8ukqfhfiuasti15bbnl759l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fuxingapp",
+            "certificate_hash": "a631bda2a43e753ab8da4313ef52cc8f54b56090"
+          }
+        },
+        {
+          "client_id": "751147794995-jlusd4r6964opel6v6dati98g04g2hvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADf70vnMpmRIa-FsFUvdzqsoEbLU0OxBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751147794995-jlusd4r6964opel6v6dati98g04g2hvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

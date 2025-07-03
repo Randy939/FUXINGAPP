@@ -6,41 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FDFDFD"
-    tools:context=".MainActivity"> <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textSize="20sp"/>
-    </androidx.core.widget.NestedScrollView>
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <!-- Scroll principal -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"> <androidx.constraintlayout.widget.ConstraintLayout
+        android:fillViewport="true"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp">
 
-        <TextView
-            android:id="@+id/textViewAppName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="Chifa Fu Xing"
-            android:textColor="@android:color/black"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/cardViewAvatar"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <!-- Título y subtítulo -->
+            <TextView
+                android:id="@+id/textViewAppName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="Chifa Fu Xing"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/cardViewAvatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+            <TextView
                 android:id="@+id/textViewAppSubtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -49,8 +46,9 @@
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="@id/textViewAppName"
                 app:layout_constraintTop_toBottomOf="@id/textViewAppName"
-                app:layout_constraintEnd_toStartOf="@+id/cardViewAvatar"/>
+                app:layout_constraintEnd_toStartOf="@+id/cardViewAvatar" />
 
+            <!-- Avatar -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewAvatar"
                 android:layout_width="50dp"
@@ -61,9 +59,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/textViewAppName"
                 app:layout_constraintBottom_toBottomOf="@id/textViewAppSubtitle"
-                app:cardBackgroundColor="#81D4FA"
-                android:clickable="true"
-                android:focusable="true">
+                app:cardBackgroundColor="#81D4FA">
 
                 <ImageView
                     android:id="@+id/imageViewAvatar"
@@ -74,6 +70,7 @@
                     android:src="@drawable/ic_avatar_placeholder" />
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Búsqueda -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/searchCardView"
                 android:layout_width="0dp"
@@ -100,8 +97,10 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_search_placeholder" app:tint="@android:color/darker_gray"/>
+                        android:src="@drawable/ic_search_placeholder"
+                        app:tint="@android:color/darker_gray"/>
                     <EditText
+                        android:id="@+id/searchEditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -116,18 +115,21 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Botón de filtros -->
             <ImageButton
                 android:id="@+id/filterButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/ic_filter_placeholder" android:background="@drawable/red_circular_background_placeholder" app:tint="@android:color/white"
+                android:src="@drawable/ic_filter_placeholder"
+                android:background="@drawable/red_circular_background_placeholder"
+                app:tint="@android:color/white"
                 android:layout_marginEnd="16dp"
                 android:padding="14dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/searchCardView"
-                app:layout_constraintBottom_toBottomOf="@id/searchCardView"/>
+                app:layout_constraintBottom_toBottomOf="@id/searchCardView" />
 
+            <!-- Chips -->
             <HorizontalScrollView
                 android:id="@+id/categoryScrollView"
                 android:layout_width="0dp"
@@ -137,6 +139,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/searchCardView">
+
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupCategories"
                     android:layout_width="wrap_content"
@@ -146,6 +149,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp">
 
+                    <!-- Chips dinámicos o predefinidos -->
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipTodo"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -181,342 +185,37 @@
                         app:chipBackgroundColor="@color/light_grey_placeholder"
                         android:textColor="@android:color/black"
                         android:checkable="true"/>
-                    </com.google.android.material.chip.ChipGroup>
+                </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
-            <GridLayout
-                android:id="@+id/gridLayoutFoodItems"
+            <!-- RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
+                android:layout_marginTop="16dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:layout_marginTop="16dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
                 app:layout_constraintTop_toBottomOf="@id/categoryScrollView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewFood1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="3dp"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@android:color/white">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="12dp">
-                        <ImageView
-                            android:id="@+id/imageViewFood1"
-                            android:layout_width="0dp"
-                            android:layout_height="130dp"
-                            android:src="@drawable/chaufa_langostinos_placeholder" android:scaleType="centerCrop"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodName1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Chaufa"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/imageViewFood1"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodDesc1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Con langostinos"
-                            android:textSize="14sp"
-                            android:textColor="@android:color/darker_gray"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodName1"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <ImageView
-                            android:id="@+id/imageViewStar1"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star_filled_placeholder" app:tint="@color/star_gold_placeholder" android:layout_marginTop="8dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodDesc1"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewRating1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4.9"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="14sp"
-                            android:layout_marginStart="4dp"
-                            app:layout_constraintStart_toEndOf="@id/imageViewStar1"
-                            app:layout_constraintBottom_toBottomOf="@id/imageViewStar1"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar1"/>
-                        <ImageButton
-                            android:id="@+id/imageButtonFavorite1"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_heart_outline_placeholder" android:background="?attr/selectableItemBackgroundBorderless"
-                            app:tint="@android:color/darker_gray"
-                            android:layout_marginEnd="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="@id/textViewRating1"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar1"
-                            android:tag="chaufa_langostinos"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewFood2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="3dp"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@android:color/white">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="12dp">
-                        <ImageView
-                            android:id="@+id/imageViewFood2"
-                            android:layout_width="0dp"
-                            android:layout_height="130dp"
-                            android:src="@drawable/chaufa_carne_placeholder" android:scaleType="centerCrop"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodName2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Chaufa"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/imageViewFood2"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodDesc2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Con Carne"
-                            android:textSize="14sp"
-                            android:textColor="@android:color/darker_gray"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodName2"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <ImageView
-                            android:id="@+id/imageViewStar2"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star_filled_placeholder" app:tint="@color/star_gold_placeholder"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodDesc2"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewRating2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4.8"
-                            android:textColor="@android:color/darker_gray"
-                             android:textSize="14sp"
-                            android:layout_marginStart="4dp"
-                            app:layout_constraintStart_toEndOf="@id/imageViewStar2"
-                            app:layout_constraintBottom_toBottomOf="@id/imageViewStar2"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar2"/>
-                        <ImageButton
-                            android:id="@+id/imageButtonFavorite2"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_heart_filled_placeholder" android:background="?attr/selectableItemBackgroundBorderless"
-                            app:tint="@color/red_primary_placeholder" android:layout_marginEnd="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="@id/textViewRating2"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar2"
-                            android:tag="chaufa_carne"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewFood3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="3dp"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@android:color/white">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="12dp">
-                        <ImageView
-                            android:id="@+id/imageViewFood3"
-                            android:layout_width="0dp"
-                            android:layout_height="130dp"
-                            android:src="@drawable/tallarin_pollo_placeholder" android:scaleType="centerCrop"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodName3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tallarines"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/imageViewFood3"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodDesc3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Con Pollo"
-                            android:textSize="14sp"
-                            android:textColor="@android:color/darker_gray"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodName3"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <ImageView
-                            android:id="@+id/imageViewStar3"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star_filled_placeholder" app:tint="@color/star_gold_placeholder"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodDesc3"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewRating3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4.6"
-                            android:textColor="@android:color/darker_gray"
-                             android:textSize="14sp"
-                            android:layout_marginStart="4dp"
-                            app:layout_constraintStart_toEndOf="@id/imageViewStar3"
-                            app:layout_constraintBottom_toBottomOf="@id/imageViewStar3"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar3"/>
-                        <ImageButton
-                            android:id="@+id/imageButtonFavorite3"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_heart_filled_placeholder" android:background="?attr/selectableItemBackgroundBorderless"
-                            app:tint="@color/red_primary_placeholder"
-                            android:layout_marginEnd="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="@id/textViewRating3"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar3"
-                            android:tag="tallarines_pollo"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardViewFood4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="3dp"
-                    android:layout_margin="8dp"
-                    app:cardBackgroundColor="@android:color/white">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="12dp">
-                        <ImageView
-                            android:id="@+id/imageViewFood4"
-                            android:layout_width="0dp"
-                            android:layout_height="130dp"
-                            android:src="@drawable/tallarin_carne_placeholder" android:scaleType="centerCrop"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodName4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tallarines"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/imageViewFood4"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewFoodDesc4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Con Carne"
-                            android:textSize="14sp"
-                            android:textColor="@android:color/darker_gray"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodName4"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <ImageView
-                            android:id="@+id/imageViewStar4"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star_filled_placeholder" app:tint="@color/star_gold_placeholder"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="12dp"
-                            app:layout_constraintTop_toBottomOf="@id/textViewFoodDesc4"
-                            app:layout_constraintStart_toStartOf="parent"/>
-                        <TextView
-                            android:id="@+id/textViewRating4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4.5"
-                            android:textColor="@android:color/darker_gray"
-                             android:textSize="14sp"
-                            android:layout_marginStart="4dp"
-                            app:layout_constraintStart_toEndOf="@id/imageViewStar4"
-                            app:layout_constraintBottom_toBottomOf="@id/imageViewStar4"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar4"/>
-                        <ImageButton
-                            android:id="@+id/imageButtonFavorite4"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_heart_outline_placeholder" android:background="?attr/selectableItemBackgroundBorderless"
-                            app:tint="@android:color/darker_gray"
-                            android:layout_marginEnd="12dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="@id/textViewRating4"
-                            app:layout_constraintTop_toTopOf="@id/imageViewStar4"
-                            android:tag="tallarines_carne"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </GridLayout>
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
-
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:backgroundTint="@color/red_primary_placeholder"
         app:fabCradleMargin="12dp"
         app:fabCradleRoundedCornerRadius="20dp"
         app:fabAlignmentMode="center"
         app:hideOnScroll="true"
-        android:backgroundTint="@color/red_primary_placeholder"
+        android:fitsSystemWindows="true"
         app:contentInsetStart="0dp"
         app:contentInsetEnd="0dp">
 
@@ -529,10 +228,12 @@
             app:itemTextColor="@color/light_grey_placeholder"
             android:background="@android:color/transparent"
             app:labelVisibilityMode="labeled"
-            app:elevation="0dp"/> </com.google.android.material.bottomappbar.BottomAppBar>
+            app:elevation="0dp"/>
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
+    <!-- FAB del carrito -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabCart" android:layout_width="wrap_content"
+        android:id="@+id/buttonCart" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cart_placeholder" app:layout_anchor="@id/bottomAppBar"
         app:backgroundTint="@color/red_fab_placeholder" app:tint="@android:color/white"

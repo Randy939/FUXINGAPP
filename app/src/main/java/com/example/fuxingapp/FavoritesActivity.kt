@@ -2,85 +2,76 @@ package com.example.fuxingapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.preference.PreferenceManager
-import android.util.Log
-import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import android.content.Intent
-import android.widget.ImageView
-import com.google.android.material.card.MaterialCardView
+import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
 
 class FavoritesActivity : AppCompatActivity() {
 
-    private lateinit var recyclerViewFavorites: RecyclerView
-    private lateinit var favoritesAdapter: FavoritesAdapter // Necesitaremos crear este Adapter
-    private val favoriteProductIds = mutableListOf<String>()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var platosAdapter: PlatosAdapter
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private var listaPlatosFavoritos: MutableList<Plato> = mutableListOf()
+    private var favoritosIds: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
-        val imageButtonBack = findViewById<ImageButton>(R.id.imageButtonBack)
-        imageButtonBack.setOnClickListener {
-            onBackPressed()
+        // Botón de regreso
+        val botonRegresar = findViewById<ImageButton>(R.id.imageButtonBack)
+        botonRegresar.setOnClickListener {
+            finish()
         }
 
-        recyclerViewFavorites = findViewById(R.id.recyclerViewFavorites)
-        recyclerViewFavorites.layoutManager = GridLayoutManager(this, 2)
+        recyclerView = findViewById(R.id.recyclerViewFavorites)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        // Cargar IDs de productos favoritos desde SharedPreferences
-        loadFavoriteProductIds()
+        platosAdapter = PlatosAdapter(listaPlatosFavoritos, favoritosIds) { plato ->
+            val intent = Intent(this, DetallePlatoActivity::class.java)
+            intent.putExtra("plato", plato)
+            startActivity(intent)
+        }
 
-        // Aquí necesitaríamos obtener los detalles de los productos favoritos
-        // y pasárselos al adapter.
-        val favoriteProducts = getFavoriteProducts(favoriteProductIds)
+        recyclerView.adapter = platosAdapter
 
-        favoritesAdapter = FavoritesAdapter(favoriteProducts) { product ->
-            // Acción al hacer clic en un item
-            val intent = when (product.id) {
-                "chaufa_langostinos" -> Intent(this, ChaufaLangostinosActivity::class.java)
-                "chaufa_carne" -> Intent(this, ChaufaCarneActivity::class.java)
-                "tallarines_pollo" -> Intent(this, TallarinesPolloActivity::class.java)
-                "tallarines_carne" -> Intent(this, TallarinesCarneActivity::class.java)
-                else -> null // No hacer nada si el ID no coincide con ninguna actividad conocida
+        cargarFavoritos()
+    }
+
+    private fun cargarFavoritos() {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("Usuarios").document(userId).collection("Favoritos")
+            .get()
+            .addOnSuccessListener { documentos ->
+                favoritosIds.clear()
+                for (doc in documentos) {
+                    favoritosIds.add(doc.id)
+                }
+
+                db.collection("Platos")
+                    .whereIn(FieldPath.documentId(), favoritosIds.toList())
+                    .get()
+                    .addOnSuccessListener { platosDocs ->
+                        listaPlatosFavoritos.clear()  // <-- mueve esto aquí
+                        for (doc in platosDocs) {
+                            val plato = doc.toObject(Plato::class.java)
+                            plato.id = doc.id
+                            listaPlatosFavoritos.add(plato)
+                        }
+                        platosAdapter.actualizarPlatos(listaPlatosFavoritos)
+                    }
             }
-            intent?.let { startActivity(it) } // Iniciar la actividad si el intent no es nulo
-        }
-        recyclerViewFavorites.adapter = favoritesAdapter
     }
 
-    private fun loadFavoriteProductIds() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        // Leer el Set de IDs favoritos
-        val favoriteIdsSet = prefs.getStringSet("favorite_product_ids", emptySet()) ?: emptySet()
-        // Limpiar la lista actual y añadir los IDs cargados
-        favoriteProductIds.clear()
-        favoriteProductIds.addAll(favoriteIdsSet)
-
-        // Eliminar logs de depuración si ya no son necesarios
-        // Log.d("FavoritesActivity", "Favorite product IDs loaded: $favoriteProductIds")
+    override fun onResume() {
+        super.onResume()
+        cargarFavoritos()
     }
-
-    private fun getFavoriteProducts(productIds: List<String>): List<Product> {
-        // Esta es una función placeholder. Necesitarás implementar la lógica
-        // para obtener los detalles de los productos basándose en sus IDs.
-        // Podrías tener una lista o mapa predefinido de productos.
-        val allProducts = listOf(
-            Product("chaufa_langostinos", "Chaufa Con Langostinos", "Un sabroso arroz frito preparado con langostinos...", R.drawable.chaufa_langostinos_placeholder),
-            Product("chaufa_carne", "Chaufa Con Carne", "Un plato emblemático que fusiona lo mejor...", R.drawable.chaufa_carne_placeholder),
-            Product("tallarines_pollo", "Tallarines Con Pollo", "Clásico de la cocina donde se combinan fideos...", R.drawable.tallarin_pollo_placeholder),
-            Product("tallarines_carne", "Tallarines Con Carne", "Es un delicioso plato preparado con fideos...", R.drawable.tallarin_carne_placeholder)
-            // Añade todos tus productos aquí con sus IDs, nombres, descripciones y drawables
-        )
-
-        return allProducts.filter { it.id in productIds }
-    }
-
-    // Clase de datos simple para representar un producto (necesitarás crear este archivo)
-    // data class Product(val id: String, val name: String, val description: String, val imageResId: Int)
-
-    // Adapter para el RecyclerView (necesitarás crear este archivo)
-    // class FavoritesAdapter(private val products: List<Product>) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {...}
-} 
+}
